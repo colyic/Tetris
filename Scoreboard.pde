@@ -1,17 +1,23 @@
 public class ScoreBoard{
-  private int score;
-  private int highScore;
-  private int linesCleared;
+  int score;
+  int highScore;
+  int linesCleared;
   
-  public int getScore(){
+  public ScoreBoard(int x, int y){
+    rect(x, y, 150, 300, 5);
+    text("SCORE:", x, y);
+    fill(0);
+  }
+  
+  int getScore(){
     return score;
   }
   
-  public int getHighScore(){
+  int getHighScore(){
     return highScore;
   }
   
-  public int getLinesCleared(){
+  int getLinesCleared(){
     return linesCleared;
   }
 }
