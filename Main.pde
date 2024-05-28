@@ -1,3 +1,4 @@
+
 void setup() {
   size(800, 800);
   background(255);
@@ -39,10 +40,16 @@ void setup() {
   text("NEXT", width - 175 + boxWidth / 2, topY - 5);
   
   // start button
+  int startX = 300;
+  int startY = 125;
+  int startWidth = 250;
+  int startHeight = 125;
+  
   fill(15, 19, 10);
-  rect(250, 125, 300, 125, boxRadius);
+  rect(startWidth, startHeight, startX, startY, boxRadius);
   fill(200);
   text("START", 400, 200);
+
 }
 
 boolean isMouseOver(int x, int y, int w, int h){
@@ -54,7 +61,14 @@ boolean isMouseOver(int x, int y, int w, int h){
   }
 }
 
+void startGame(){
+  if((isMouseOver(300, 125, 250, 150)) && mousePressed){
+    fill(200);
+    rect(250, 125, 300, 125, 5);
+  }
+  
+}
 
 void draw() {
-
+  startGame();
 }
