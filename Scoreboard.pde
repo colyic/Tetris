@@ -1,32 +1,50 @@
 public class ScoreBoard{
-  int score = 0;
-  int highscore = 0;
+  int highscore;
+  int score;
+  int level;
   int linesCleared = 0;
   
-  public ScoreBoard(int x, int y){
-    rect(x, y, 150, 300, 5);
-    text("SCORE:", x, y);
-    fill(0);
-  }
+  public ScoreBoard(){
+    rect(25, 250, 150, 350, 5);
   
-  int getScore(){
-    return score;
+    fill(255);
+  
+    text("HIGHSCORE", 100, 300);
+    text("SCORE", 100, 300 + 75);
+    text("LEVEL", 100, 300 + 150);
+    text("LINES", 100, 300 + 225);
   }
   
   int getHighScore(){
     return highscore;
   }
   
+  int getScore(){
+    return score;
+  }
+  
+  int getLevel(){
+    return level;
+  }
+  
   int getLinesCleared(){
     return linesCleared;
   }
   
-  void updateScore(int newScore){
-    score = newScore;
-  }
-  
   void updateHighScore(int newHighscore){
     highscore = newHighscore;
+  }
+  
+  void updateScore(int addedScore){
+    score += addedScore;
+  }
+  
+  void updateLevel(){
+    level++;
+  }
+  
+  void updateLinesCleared(int addedLinesCleared){
+    linesCleared += addedLinesCleared;
   }
 }
   
