@@ -20,13 +20,15 @@ void setup() {
   text("HOLD", leftX + boxWidth / 2, topY - 5);
   
   // score + level + lines box
-  rect(leftX, 300, boxWidth, bottomY, boxRadius);
+  rect(leftX, 250, boxWidth, 350, boxRadius);
   
   fill(255);
   
-  text("SCORE", leftX + boxWidth / 2, bottomY + 50);
-  text("LEVEL", leftX + boxWidth / 2, bottomY + 300 / 2);
-  text("LINES", leftX + boxWidth / 2, bottomY + 300 - 50);
+  text("HIGHSCORE", leftX + boxWidth / 2, bottomY);
+  text("SCORE", leftX + boxWidth / 2, bottomY + 75);
+  text("LEVEL", leftX + boxWidth / 2, bottomY + 150);
+  text("LINES", leftX + boxWidth / 2, bottomY + 225);
+  
   
   // gameboard box
   fill(200);
