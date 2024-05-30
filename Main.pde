@@ -1,3 +1,10 @@
+int gameboardLength = 600;
+int gameboardWidth = 400;
+int gameboardX = width / 2 - gameboardWidth / 2;
+int gameboardY = height / 2 - gameboardLength / 2;
+
+int boxRadius = 5;
+
 void setup() {
   size(800, 800);
   background(255);
@@ -8,7 +15,6 @@ void setup() {
   int bottomY = 300;
   
   int boxWidth = 150;
-  int boxRadius = 5;
 
   fill(200);
   textAlign(CENTER);
@@ -29,10 +35,7 @@ void setup() {
   
   // gameboard box
   fill(200);
-  int gameboardLength = 600;
-  int gameboardWidth = 400;
-  
-  rect(width / 2 - gameboardWidth / 2, height / 2 - gameboardLength / 2, gameboardWidth, gameboardLength, boxRadius);
+  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
   
   // next box
   rect(width - 175, topY, boxWidth, 300, boxRadius);
@@ -69,9 +72,31 @@ void startScreen() {
   text("START", startX + startWidth / 2, startY + 55);
   
   if (isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
-    gameboard();
+    //gameboard();
   }
 }
 
-void gameboard() {
-}
+//void gameboard() {
+//  fill(200);
+//  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
+
+//  int[][] map = new int[20][10];
+  
+//  int gridSide = 30;
+//  int gridX = gameboardX + 50;
+//  int gridY = gameboardY + 50;
+  
+//  stroke(255);
+//  fill(0);
+  
+//  for (int i = 0; i < map.length; i++) {
+//    for (int j = 0; j < map[i].length; j++) {
+//      rect(gridX, gridY, gridSide, gridSide, 2);
+//      gridX += gridSide;
+      
+//      if (j == map[i].length - 1) {
+//        gridY += gridSide;
+//      }
+//    }
+//  }
+//}
