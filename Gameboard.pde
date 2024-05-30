@@ -1,6 +1,10 @@
 public class Gameboard{
-  boolean grid[][];
+  boolean[][] grid;
   
   public Gameboard(){
+    grid = new boolean[10][15];
   }
+  
+  
+  
 }
