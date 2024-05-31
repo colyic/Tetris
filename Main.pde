@@ -1,5 +1,8 @@
-int gameboardLength = 600;
+int gameboardLength = 700;
 int gameboardWidth = 400;
+
+int startWidth = 250;
+int startLength = 80;
 
 int boxRadius = 5;
 
@@ -47,9 +50,12 @@ void setup() {
 }
 
 void draw() {
-  //if (isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
-  //    gameboard();
-  //}
+  int startX = width / 2 - startWidth / 2;
+  int startY = height / 2 - startLength / 2 - 50;
+
+  if (isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
+      gameboard();
+  }
 
 }
 
@@ -91,7 +97,7 @@ void gameboard() {
   int gridY = gameboardY + 50;
   
   stroke(255);
-  fill(0);
+  fill(65);
   
   for (int i = 0; i < map.length; i++) {
     for (int j = 0; j < map[i].length; j++) {
@@ -100,6 +106,7 @@ void gameboard() {
       
       if (j == map[i].length - 1) {
         gridY += gridSide;
+        gridX -= gridSide * 10;
       }
     }
   }
