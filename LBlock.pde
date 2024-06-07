@@ -1,6 +1,6 @@
 public class LBlock extends Block{
   
   public LBlock(){
-    baseColor = #FFA500;
+    blockColor = #FFA500;
   }
 }

@@ -1,5 +1,3 @@
-Block currentBlock;
-
 int gameboardLength = 700;
 int gameboardWidth = 400;
 
@@ -85,6 +83,45 @@ void startScreen() {
   text("START", startX + startWidth / 2, startY + 55);
 }
 
+//void startGame() {
+//  Block block = new Block();
+ 
+//  int blockX = 0;
+//  int blockY = 5;
+ 
+//  for (int i = blockX; i < blockX + 2; i++) {
+//    for (int j = blockY; j < blockY + 4; j++) {
+//      map[i][j] = block.getGrid()[i][j - blockY];
+//    }
+//  }
+ 
+//  int gameboardX = width / 2 - gameboardWidth / 2;
+//  int gameboardY = height / 2 - gameboardLength / 2;
+
+//  int gridSide = 30;
+//  int gridX = gameboardX + 50;
+//  int gridY = gameboardY + 50;
+ 
+//  stroke(255);
+//  fill(block.getBlockColor());
+ 
+//  for (int i = 0; i < map.length; i++) {
+//    for (int j = 0; j < map[i].length; j++) {
+//      if (map[i][j] == 1) {
+//        fill(block.getBlockColor());
+//        rect(gridX + gridSide * j, gridY + gridSide * i, gridSide, gridSide, 2);
+//      }
+//    }
+ 
+//  for (int i = 0; i < map.length; i++) {
+//    for (int j = 0; j < map[i].length; j++) {
+//      map[i][j] = 0;
+//    }
+//  }
+//}
+
+
+
 void gameboard() {
   int gameboardX = width / 2 - gameboardWidth / 2;
   int gameboardY = height / 2 - gameboardLength / 2;
@@ -111,30 +148,5 @@ void gameboard() {
         gridX -= gridSide * 10;
       }
     }
-  }
-}
-
-int x, y;
-boolean[] keys = new boolean[128];
-
-void keyPressed(){
-  keys[key] = true;  
-}
-void keyReleased(){
-  keys[key] = false;
-}
-
-void controls(){
-  if(keys['w']){
-    currentBlock.rotate();
-  }
-  if(keys['a']){
-    currentBlock. moveLeft();
-  }
-  if(keys['s']){
-    currentBlock.moveRight();
-  }
-  if(keys['d']){
-    currentBlock.softDrop();
   }
 }

@@ -1,7 +1,7 @@
 public class ZBLock extends Block{
   
   public ZBLock(){
-    baseColor = #FFFF00;
+    blockColor = #FFFF00;
     
   }
 }

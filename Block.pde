@@ -1,56 +1,65 @@
-public class Block{
+public class Block {
   String blockType;
-  int positionX;
-  int positionY;
-  color baseColor;
-  int speed;
+  color blockColor;
+  int[][] blockGrid;
+  int blockX;
+  int blockY;
   
-  String getBlockType(){
+  public Block(){
+    this.randomizeType();
+    blockColor = color(150, 150, 150);
+  }
+  
+  String getBlockType() {
     return blockType;
   }
   
-  int getSpeed(){
-    return speed;
+  int getBlockX(){
+    return blockY;
   }
   
-  int getPositionX(){
-    return positionX;
+  int getBlockY(){
+    return blockY;
   }
   
-  int getPositionY(){
-    return positionY;
+  color getBlockColor() {
+    return blockColor;
   }
   
-  void changeSpeed(){
-    speed++;
-  }
-  
-  void moveRight(){
-    positionX++;
-  }
-  
-  void moveLeft(){
-    positionX--;
-  }
-  
-  void hardDrop(){
-    for(int i = grid[0].length; i >=0; i++){
-      if(grid[positionX][positionY] == 0)[
-      positionY--;
-    }
-  }
-  
-  void softDrop(){
-    positionY--;
-  }
-  
-  void rotate(){
+  int[][] getGrid() {
+    return blockGrid;
   }
   
   void randomizeType() {
     int rng = (int) (Math.random() * 7);
+    
     String[] typeArr = {"IBlock", "JBlock", "LBlock", "OBlock", "SBlock", "TBlock", "ZBlock"};
+    int[][][] grid = {
+      {{1, 1, 1, 1}, {0, 0, 0, 0}},
+      {{1, 0, 0, 0}, {1, 1, 1, 0}},
+      {{0, 0, 0, 1}, {0, 1, 1, 1}},
+      {{0, 1, 1, 0}, {0, 1, 1, 0}},
+      {{0, 0, 1, 1}, {0, 1, 1, 0}},
+      {{0, 1, 0, 0}, {1, 1, 1, 0}},
+      {{1, 1, 0, 0}, {0, 1, 1, 0}}
+    };
     
     blockType = typeArr[rng];
+    blockGrid = grid[rng];
+  }
+  
+  int[][] rotateBlock(int[][] oldBlockGrid) {
+    int rows = oldBlockGrid.length;
+    int cols = oldBlockGrid[0].length;
+    int[][] newBlockGrid = new int[cols][rows];
+    for(int i = 0; i < rows; i++) {
+      for(int j = 0; j < cols; j++) {
+        newBlockGrid[j][rows - 1 - i] = oldBlockGrid[i][j];
+    }
+  }
+  return newBlockGrid;
+  }
+  
+  int addBLock(){
   }
 }
