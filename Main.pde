@@ -1,21 +1,29 @@
-int gameboardLength = 700;
-int gameboardWidth = 400;
+import java.util.Arrays;
+
+boolean isStarted;
 
 int startWidth = 250;
 int startLength = 80;
 
 int boxRadius = 5;
 
+Gameboard gameboard;
+
 void setup() {
+  frameRate(1);
   size(800, 800);
   background(255);
   noStroke();
+  
+  isStarted = false;
   
   int leftX = 25;
   int topY = 125;
   int bottomY = 300;
   
   int boxWidth = 150;
+  
+  gameboard = new Gameboard();
 
   fill(200);
   textAlign(CENTER);
@@ -33,16 +41,9 @@ void setup() {
   text("SCORE", leftX + boxWidth / 2, bottomY + 50);
   text("LEVEL", leftX + boxWidth / 2, bottomY + 150);
   text("LINES", leftX + boxWidth / 2, bottomY + 250);
-  
-  // gameboard box
-  fill(200);
-  
-  int gameboardX = width / 2 - gameboardWidth / 2;
-  int gameboardY = height / 2 - gameboardLength / 2;
-
-  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
-  
+    
   // next box
+  fill(200);
   rect(width - 175, topY, boxWidth, 300, boxRadius);
   text("NEXT", width - 175 + boxWidth / 2, topY - 5);
   
@@ -53,10 +54,14 @@ void draw() {
   int startX = width / 2 - startWidth / 2;
   int startY = height / 2 - startLength / 2 - 50;
 
-  if (isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
-      gameboard();
+  if (!isStarted && isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
+    isStarted = true;
+    gameboard.drawGrid();
   }
-
+  
+  if (isStarted) {
+    gameboard.startGame();
+  }
 }
 
 boolean isMouseOver(int x, int y, int w, int h) {
@@ -81,33 +86,4 @@ void startScreen() {
   textSize(45);
   
   text("START", startX + startWidth / 2, startY + 55);
-}
-
-void gameboard() {
-  int gameboardX = width / 2 - gameboardWidth / 2;
-  int gameboardY = height / 2 - gameboardLength / 2;
-
-  fill(200);
-  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
-
-  int[][] map = new int[20][10];
-  
-  int gridSide = 30;
-  int gridX = gameboardX + 50;
-  int gridY = gameboardY + 50;
-  
-  stroke(255);
-  fill(65);
-  
-  for (int i = 0; i < map.length; i++) {
-    for (int j = 0; j < map[i].length; j++) {
-      rect(gridX, gridY, gridSide, gridSide, 2);
-      gridX += gridSide;
-      
-      if (j == map[i].length - 1) {
-        gridY += gridSide;
-        gridX -= gridSide * 10;
-      }
-    }
-  }
 }
