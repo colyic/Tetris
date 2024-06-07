@@ -1,11 +1,18 @@
 public class Block {
   String blockType;
   color blockColor;
+  
+  int blockX;
+  int blockY;
+  
   int[][] blockGrid;
   
   public Block() {
     this.randomizeType();
+    
     blockColor = color(150, 150, 150);
+    blockX = 3;
+    blockY = 0;
   }
   
   String getBlockType() {
@@ -20,6 +27,22 @@ public class Block {
     return blockGrid;
   }
   
+  int getBlockX() {
+    return blockX;
+  }
+  
+  int getBlockY() {
+    return blockY;
+  }
+  
+  void addBlockX() {
+    blockX++;
+  }
+  
+  void addBlockY() {
+    blockY++;
+  }
+  
   void randomizeType() {
     int rng = (int) (Math.random() * 7);
     
@@ -27,9 +50,9 @@ public class Block {
     int[][][] grid = {
       {{1, 1, 1, 1}, {0, 0, 0, 0}},
       {{1, 0, 0, 0}, {1, 1, 1, 0}},
-      {{0, 0, 0, 1}, {0, 1, 1, 1}},
+      {{0, 0, 1, 0}, {1, 1, 1, 0}},
       {{0, 1, 1, 0}, {0, 1, 1, 0}},
-      {{0, 0, 1, 1}, {0, 1, 1, 0}},
+      {{0, 1, 1, 0}, {1, 1, 0, 0}},
       {{0, 1, 0, 0}, {1, 1, 1, 0}},
       {{1, 1, 0, 0}, {0, 1, 1, 0}}
     };
