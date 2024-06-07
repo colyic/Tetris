@@ -1,5 +1,5 @@
 public class Gameboard{
-  boolean grid[][];
+  int grid[][];
   
   public Gameboard(){
   }

@@ -26,7 +26,6 @@ public class Block{
   }
   
   void moveRight(){
-    if(
     positionX++;
   }
   
@@ -35,21 +34,23 @@ public class Block{
   }
   
   void hardDrop(){
+    for(int i = grid[0].length; i >=0; i++){
+      if(grid[positionX][positionY] == 0)[
+      positionY--;
+    }
   }
   
-  void softDrip(){
+  void softDrop(){
+    positionY--;
   }
   
   void rotate(){
   }
   
-  void randomizeType(){
-    int rng = (int)(Math.random() * 7);
-    String[] typeArr = {"IBLock", "JBLock", "LBlock", "OBlock", "SBlock", "TBLock", "ZBLock"};
-    for(int i = 0; i <= 7; i++){
-      if(rng == i){
-        this.blockType = typeArr[i];
-      }
-    } 
+  void randomizeType() {
+    int rng = (int) (Math.random() * 7);
+    String[] typeArr = {"IBlock", "JBlock", "LBlock", "OBlock", "SBlock", "TBlock", "ZBlock"};
+    
+    blockType = typeArr[rng];
   }
 }

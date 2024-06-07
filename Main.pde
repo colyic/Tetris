@@ -1,4 +1,13 @@
-boolean isStarted = false;
+Block currentBlock;
+
+int gameboardLength = 700;
+int gameboardWidth = 400;
+
+int startWidth = 250;
+int startLength = 80;
+
+int boxRadius = 5;
+
 void setup() {
   size(800, 800);
   background(255);
@@ -9,7 +18,6 @@ void setup() {
   int bottomY = 300;
   
   int boxWidth = 150;
-  int boxRadius = 5;
 
   fill(200);
   textAlign(CENTER);
@@ -20,66 +28,113 @@ void setup() {
   text("HOLD", leftX + boxWidth / 2, topY - 5);
   
   // score + level + lines box
-  rect(leftX, 250, boxWidth, 350, boxRadius);
+  rect(leftX, bottomY, boxWidth, 350, boxRadius);
   
   fill(255);
   
-  text("HIGHSCORE", leftX + boxWidth / 2, bottomY);
-  text("SCORE", leftX + boxWidth / 2, bottomY + 75);
+  text("SCORE", leftX + boxWidth / 2, bottomY + 50);
   text("LEVEL", leftX + boxWidth / 2, bottomY + 150);
-  text("LINES", leftX + boxWidth / 2, bottomY + 225);
-  
+  text("LINES", leftX + boxWidth / 2, bottomY + 250);
   
   // gameboard box
   fill(200);
-  int gameboardLength = 600;
-  int gameboardWidth = 400;
   
-  rect(width / 2 - gameboardWidth / 2, height / 2 - gameboardLength / 2, gameboardWidth, gameboardLength, boxRadius);
+  int gameboardX = width / 2 - gameboardWidth / 2;
+  int gameboardY = height / 2 - gameboardLength / 2;
+
+  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
   
   // next box
   rect(width - 175, topY, boxWidth, 300, boxRadius);
   text("NEXT", width - 175 + boxWidth / 2, topY - 5);
   
-  // start button
-  int startX = 300;
-  int startY = 125;
-  int startWidth = 250;
-  int startHeight = 125;
-  
-  fill(15, 19, 10);
-  rect(startWidth, startHeight, startX, startY, boxRadius);
-  fill(200);
-  text("START", 400, 200);
+  startScreen();
+}
+
+void draw() {
+  int startX = width / 2 - startWidth / 2;
+  int startY = height / 2 - startLength / 2 - 50;
+
+  if (isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
+      gameboard();
+  }
 
 }
 
-boolean isMouseOver(int x, int y, int w, int h){
-  if(mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h){
+boolean isMouseOver(int x, int y, int w, int h) {
+  if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h) {
     return true;
   }
-  else{
-    return false;
-  }
+  return false;
 }
 
-void setupGameboard(){//temporary
-  fill(50);
-  for(int i = 200; i < 600; i-=40){
-    for(int j = 100; j < 700; i-=40){
-      rect(i, j, 38, 38, 5);
+void startScreen() {
+  fill(#90EE90);
+ 
+  int startWidth = 250;
+  int startLength = 80;
+  int startX = width / 2 - startWidth / 2;
+  int startY = height / 2 - startLength / 2 - 50;
+  
+  rect(startX, startY, startWidth, startLength, 2);
+  
+  fill(255);
+  textAlign(CENTER);
+  textSize(45);
+  
+  text("START", startX + startWidth / 2, startY + 55);
+}
+
+void gameboard() {
+  int gameboardX = width / 2 - gameboardWidth / 2;
+  int gameboardY = height / 2 - gameboardLength / 2;
+
+  fill(200);
+  rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
+
+  int[][] map = new int[20][10];
+  
+  int gridSide = 30;
+  int gridX = gameboardX + 50;
+  int gridY = gameboardY + 50;
+  
+  stroke(255);
+  fill(65);
+  
+  for (int i = 0; i < map.length; i++) {
+    for (int j = 0; j < map[i].length; j++) {
+      rect(gridX, gridY, gridSide, gridSide, 2);
+      gridX += gridSide;
+      
+      if (j == map[i].length - 1) {
+        gridY += gridSide;
+        gridX -= gridSide * 10;
+      }
     }
   }
 }
 
-void startGame(){
-  if((isMouseOver(300, 125, 250, 150)) && mousePressed){
-    fill(200);
-    rect(250, 125, 300, 125, 5);
-    setupGameboard();
-  }
+int x, y;
+boolean[] keys = new boolean[128];
+
+void keyPressed(){
+  keys[key] = true;  
+}
+void keyReleased(){
+  keys[key] = false;
 }
 
-void draw() {
-  startGame();
+void controls(){
+  if(keys['w']){
+    currentBlock.rotate();
+  }
+  if(keys['a']){
+    currentBlock. moveLeft();
+  }
+  if(keys['s']){
+    currentBlock.moveRight();
+  }
+  if(keys['d']){
+    currentBlock.softDrop();
+  }
 }
