@@ -10,7 +10,6 @@ public class Block {
   public Block() {
     this.randomizeType();
     
-    blockColor = color(150, 150, 150);
     blockX = 3;
     blockY = 0;
   }
@@ -47,6 +46,8 @@ public class Block {
     int rng = (int) (Math.random() * 7);
     
     String[] typeArr = {"IBlock", "JBlock", "LBlock", "OBlock", "SBlock", "TBlock", "ZBlock"};
+    color[] colors = {#00FFFF, #00008B, #FFA500, #FFFF00, #90EE90, #FF00FF, #FFFF00};
+    
     int[][][] grid = {
       {{1, 1, 1, 1}, {0, 0, 0, 0}},
       {{1, 0, 0, 0}, {1, 1, 1, 0}},
@@ -59,5 +60,6 @@ public class Block {
     
     blockType = typeArr[rng];
     blockGrid = grid[rng];
+    blockColor = colors[rng];
   }
 }
