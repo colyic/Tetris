@@ -40,6 +40,10 @@ public class Gameboard {
     return gameboardWidth;
   }
   
+  void fillBlock(int x, int y) {
+    rect(gridX + x * gridSide, gridY + y * gridSide, gridSide, gridSide, 2);
+  }
+  
   void drawGrid() {
     stroke(255);
     fill(65);
@@ -63,18 +67,16 @@ public class Gameboard {
   void startGame() {
     block = new Block();
     
-    //while (block.getBlockY() < 19) {
+    while (block.getBlockY() < 19) {
       for (int i = block.getBlockX(); i < block.getBlockX() + 4; i++) {
         for (int j = block.getBlockY(); j < block.getBlockY() + 2; j++) { 
           map[j][i] = block.getGrid()[j - block.getBlockY()][i - block.getBlockX()];
         }
       }
-      
-      stroke(255);
-      fill(block.getBlockColor());
-      
+            
       System.out.println(block.getBlockType());
       System.out.println(block.getBlockY());
+      System.out.println(block.getBlockColor());
       
       stroke(255);
       fill(65);
@@ -108,5 +110,5 @@ public class Gameboard {
          }
        }
      }
-  //}
+  }
 }
