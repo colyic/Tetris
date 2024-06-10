@@ -34,9 +34,64 @@ public class Block {
     return blockY;
   }
   
-  void addBlockX() {
+  private boolean canMoveLeft() {
+    for (int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1 && (blockX + j - 1 < 0)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private boolean canMoveRight() {
+    for (int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1 && (blockX + j + 1 >= 10)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  private boolean canMoveDown() {
+    for (int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1 && (blockY + i + 1 >= 20)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  void moveLeft() {
+    if(canMoveLeft()) {
+    blockX--;
+    }
+  }
+  
+  void moveRight() {
+    if(canMoveRight()) {
+    blockX++;
+    }
+  }
+  
+  void softDrop() {
+    if(canMoveDown()) {
+    blockY++;
+    }
+  }
+  
+  void hardDrop(){
+  }
+  
+  void addBlockX(){
     blockX++;
   }
+  
   
   void addBlockY() {
     blockY++;
@@ -63,6 +118,8 @@ public class Block {
     blockColor = colors[rng];
   }
   
+  
+  
   void rotate() {
     int rows = blockGrid.length;
     int cols = blockGrid[0].length;
@@ -75,5 +132,13 @@ public class Block {
     }
     
     blockGrid = newGrid;
+    
+    //check for out of bounds
+    if (blockX + newGrid[0].length > 10) {
+      blockX = 10 - newGrid[0].length;
+    }
+    if (blockY + newGrid.length > 20) {
+      blockY = 20 - newGrid.length;
+    }
   }
 }

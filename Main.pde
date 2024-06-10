@@ -8,7 +8,7 @@ int boxRadius = 5;
 Gameboard gameboard;
 
 void setup() {
-  frameRate(1);
+  //frameRate(1);
   size(800, 800);
   background(255);
   noStroke();

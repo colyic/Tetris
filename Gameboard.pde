@@ -26,15 +26,13 @@ public class Gameboard {
     gameboardY = height / 2 - gameboardLength / 2;
     
     fill(200);
-    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
+    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, 5); // Assuming boxRadius is 5
     
     gridSide = 30;
     gridX = gameboardX + 50;
     gridY = gameboardY + 50;
-    
-    currentBlock = new Block();
-    
-    
+
+    currentBlock = new Block(); // Initialize the current block when the game starts
   }
   
   int getLength() {
@@ -110,18 +108,17 @@ public class Gameboard {
     }
   }
   
-  void keyPressed(){
-    if(keyCode == UP){
+  void keyPressed() {
+    if (keyCode == UP) {
       currentBlock.rotate();
-      updateGrid();
+    } else if (keyCode == LEFT) {
+      currentBlock.moveLeft();
+    } else if (keyCode == RIGHT) {
+      currentBlock.moveRight();
+    } else if (keyCode == DOWN) {
+      currentBlock.softDrop();
     }
+    //} else if (keyCode == )
+    updateGrid();
   }
-  
-  void updateNext(){
-    // next box
-    fill(200);
-    rect(width - 175, topY, boxWidth, 300, boxRadius);
-    text("NEXT", width - 175 + boxWidth / 2, topY - 5);
-  }
-
 }
