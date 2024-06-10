@@ -5,14 +5,6 @@ public class ScoreBoard{
   int linesCleared = 0;
   
   public ScoreBoard(){
-    rect(25, 250, 150, 350, 5);
-  
-    fill(255);
-  
-    text("HIGHSCORE", 100, 300);
-    text("SCORE", 100, 300 + 75);
-    text("LEVEL", 100, 300 + 150);
-    text("LINES", 100, 300 + 225);
   }
   
   int getHighScore(){

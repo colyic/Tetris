@@ -13,7 +13,8 @@ public class Gameboard {
   int gridX;
   int gridY;
   
-  Block block;
+  Block currentBlock;
+  Block[] queue;
   
   public Gameboard() {
     map = new int[20][10];
@@ -30,6 +31,10 @@ public class Gameboard {
     gridSide = 30;
     gridX = gameboardX + 50;
     gridY = gameboardY + 50;
+    
+    currentBlock = new Block();
+    
+    
   }
   
   int getLength() {
@@ -38,6 +43,10 @@ public class Gameboard {
   
   int getWidth() {
     return gameboardWidth;
+  }
+  
+  void fillBlock(int x, int y) {
+    rect(gridX + x * gridSide, gridY + y * gridSide, gridSide, gridSide, 2);
   }
   
   void drawGrid() {
@@ -61,52 +70,58 @@ public class Gameboard {
   }
   
   void startGame() {
-    block = new Block();
+    drawGrid();
+    drawBlock();
+  }
+  
+  void drawBlock() {
+    int[][] grid = currentBlock.getGrid();
+    int x = currentBlock.getBlockX();
+    int y = currentBlock.getBlockY();
     
-    //while (block.getBlockY() < 19) {
-      for (int i = block.getBlockX(); i < block.getBlockX() + 4; i++) {
-        for (int j = block.getBlockY(); j < block.getBlockY() + 2; j++) { 
-          map[j][i] = block.getGrid()[j - block.getBlockY()][i - block.getBlockX()];
+    fill(currentBlock.getBlockColor());
+    
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        if (grid[i][j] == 1) {
+          rect(gridX + (x + j) * gridSide, gridY + (y + i) * gridSide, gridSide, gridSide);
         }
       }
-      
-      stroke(255);
-      fill(block.getBlockColor());
-      
-      System.out.println(block.getBlockType());
-      System.out.println(block.getBlockY());
-      
-      stroke(255);
-      fill(65);
-      
-      for (int i = 0; i < map.length; i++) {
-        for (int j = 0; j < map[i].length; j++) {
-          fill(65);
-          
-          if (map[i][j] == 1) {
-            fill(block.getBlockColor());
-          }
-          
-          rect(gridX, gridY, gridSide, gridSide, 2);
-          gridX += gridSide;
-          
-          if (j == map[i].length - 1) {
-            gridY += gridSide;
-            gridX -= gridSide * 10;
-          }
+    }
+  }
+  
+  void updateGrid() {
+    // Reset the map
+    for (int i = 0; i < map.length; i++) {
+      Arrays.fill(map[i], 0);
+    }
+    
+    // Update the map with the current block's position
+    int[][] grid = currentBlock.getGrid();
+    int x = currentBlock.getBlockX();
+    int y = currentBlock.getBlockY();
+    
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        if (grid[i][j] == 1) {
+          map[y + i][x + j] = 1;
         }
-       }
-       
-       gridX = gameboardX + 50;
-       gridY = gameboardY + 50;
-       
-       //block.addBlockY();
-       
-       for (int i = 0; i < map.length; i++) {
-         for (int j = 0; j < map[i].length; j++) {
-           map[i][j] = 0;
-         }
-       }
-     }
-  //}
+      }
+    }
+  }
+  
+  void keyPressed(){
+    if(keyCode == UP){
+      currentBlock.rotate();
+      updateGrid();
+    }
+  }
+  
+  void updateNext(){
+    // next box
+    fill(200);
+    rect(width - 175, topY, boxWidth, 300, boxRadius);
+    text("NEXT", width - 175 + boxWidth / 2, topY - 5);
+  }
+
 }
