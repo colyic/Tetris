@@ -15,6 +15,7 @@ public class Gameboard {
   
   Block currentBlock;
   Block[] queue;
+  Block hold;
   
   public Gameboard() {
     map = new int[20][10];
@@ -89,7 +90,7 @@ public class Gameboard {
   }
   
   void updateGrid() {
-    // Reset the map
+    // reset map
     for (int i = 0; i < map.length; i++) {
       Arrays.fill(map[i], 0);
     }
