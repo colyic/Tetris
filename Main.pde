@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 boolean isStarted;
 
 int startWidth = 250;
@@ -47,7 +45,7 @@ void setup() {
   rect(width - 175, topY, boxWidth, 300, boxRadius);
   text("NEXT", width - 175 + boxWidth / 2, topY - 5);
   
-  startScreen();
+  startButton();
 }
 
 void draw() {
@@ -71,7 +69,7 @@ boolean isMouseOver(int x, int y, int w, int h) {
   return false;
 }
 
-void startScreen() {
+void startButton() {
   fill(#90EE90);
  
   int startWidth = 250;

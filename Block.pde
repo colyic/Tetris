@@ -1,6 +1,7 @@
 public class Block {
   String blockType;
   color blockColor;
+  boolean isPlaced;
   
   int blockX;
   int blockY;
@@ -9,6 +10,8 @@ public class Block {
   
   public Block() {
     this.randomizeType();
+    
+    isPlaced = false;
     
     blockX = 3;
     blockY = 0;
@@ -34,12 +37,16 @@ public class Block {
     return blockY;
   }
   
-  void addBlockX() {
-    blockX++;
+  void dropOne() {
+    blockY++;
   }
   
-  void addBlockY() {
-    blockY++;
+  boolean isPlaced() {
+    return isPlaced;
+  }
+  
+  void setIsPlaced(boolean placed) {
+    isPlaced = placed;
   }
   
   void randomizeType() {
@@ -49,7 +56,7 @@ public class Block {
     color[] colors = {#00FFFF, #00008B, #FFA500, #FFFF00, #90EE90, #FF00FF, #FFFF00};
     
     int[][][] grid = {
-      {{1, 1, 1, 1}, {0, 0, 0, 0}},
+      {{0, 0, 0, 0}, {1, 1, 1, 1}},
       {{1, 0, 0, 0}, {1, 1, 1, 0}},
       {{0, 0, 1, 0}, {1, 1, 1, 0}},
       {{0, 1, 1, 0}, {0, 1, 1, 0}},
