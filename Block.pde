@@ -1,6 +1,7 @@
 public class Block {
   String blockType;
   color blockColor;
+  boolean isPlaced;
   
   int blockX;
   int blockY;
@@ -9,6 +10,7 @@ public class Block {
   
   public Block() {
     this.randomizeType();
+    isPlaced = false;
     
     blockX = 3;
     blockY = 0;
@@ -81,11 +83,18 @@ public class Block {
   
   void softDrop() {
     if(canMoveDown()) {
-    blockY++;
+      blockY++;
+    }
+    else {
+      isPlaced = true;
     }
   }
   
   void hardDrop(){
+    while(canMoveDown()){
+      blockY++;
+    }
+    isPlaced = true;
   }
   
   void addBlockX(){
@@ -95,6 +104,14 @@ public class Block {
   
   void addBlockY() {
     blockY++;
+  }
+  
+  boolean isPlaced() {
+    return isPlaced;
+  }
+  
+  void setIsPlaced(boolean placed) {
+    isPlaced = placed;
   }
   
   void randomizeType() {
@@ -156,7 +173,7 @@ public class Block {
         newBlockY = 20 - newGrid.length;
     }
 
-    // Set the new grid and position if valid
+    // set new grid and position if valid
     if(isValidPosition(newGrid, newBlockX, newBlockY)) {
         blockGrid = newGrid;
         blockX = newBlockX;

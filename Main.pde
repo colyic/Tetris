@@ -58,7 +58,9 @@ void draw() {
   }
   
   if (isStarted) {
-    gameboard.startGame();
+    if (frameCount % 30 == 0) {
+      gameboard.updateGame();
+    }
   }
 }
 
@@ -87,7 +89,18 @@ void startScreen() {
 }
 
 void keyPressed() {
-  if (isStarted) {
-    gameboard.keyPressed();
+  if(isStarted){
+    if (keyCode == UP) {
+      gameboard.currentBlock.rotate();
+    } else if (keyCode == LEFT) {
+      gameboard.currentBlock.moveLeft();
+    } else if (keyCode == RIGHT) {
+      gameboard.currentBlock.moveRight();
+    } else if (keyCode == DOWN) {
+      gameboard.currentBlock.softDrop();
+    } else if (keyCode == ' ')  {
+      gameboard.currentBlock.hardDrop();
+    }
+    gameboard.updateGrid();
   }
 }
