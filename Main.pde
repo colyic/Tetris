@@ -12,12 +12,16 @@ int highScore;
 void setup() {
   size(800, 800);
   background(255);
+  beginningScreen();
+}
+
+void beginningScreen(){
+  textAlign(LEFT);
   noStroke();
   
   isStarted = false;
   gameboard = new Gameboard();
   scoreboard = new Scoreboard();
-  
   textSize(80);
   fill(#FF6961);
   text("T", 265, 225);
@@ -61,7 +65,7 @@ void draw() {
     
     if (isMouseOver(275, 510, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
-      setup();
+      beginningScreen();
       //gameboard.updateGrid();
     }
   }
@@ -82,7 +86,7 @@ void draw() {
         }
         if (isMouseOver(275, 510, 250, 80) && mousePressed) {
           gameboard.isPaused = false;
-          setup();
+          beginningScreen();
           //gameboard.updateGrid();
         }
       }
@@ -90,8 +94,6 @@ void draw() {
       pauseScreen();
     }
   }
-  
-  
 }
 
 boolean isMouseOver(int x, int y, int w, int h) {

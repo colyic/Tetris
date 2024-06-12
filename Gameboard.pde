@@ -22,7 +22,7 @@ public class Gameboard {
   boolean isGameOver;
   boolean isPaused;
   
-  long lastDropTime;  // Time tracking for block dropping
+  long lastDropTime;  // time tracking for block dropping
   int dropInterval = 1000;;  // 1 second interval
   
   ScoreBoard scoreboard;
@@ -210,30 +210,6 @@ public class Gameboard {
     gridY = gameboardY + 50;
   }
   
-  //void updateGrid() {
-  //  // reset map
-  //  for (int i = 0; i < map.length; i++) {
-  //    for (int j = 0; j < map[i].length; j++) {
-  //      if(map[i][j] != 2){
-  //        map[i][j] = 0;
-  //      }
-  //    }
-  //  }
-    
-  //  // Update the map with the current block's position
-  //  int[][] grid = currentBlock.getGrid();
-  //  int x = currentBlock.getBlockX();
-  //  int y = currentBlock.getBlockY();
-    
-  //  for (int i = 0; i < grid.length; i++) {
-  //    for (int j = 0; j < grid[0].length; j++) {
-  //      if (grid[i][j] == 1) {
-  //        map[y + i][x + j] = 1;
-  //      }
-  //    }
-  //  }
-  //}
-  
   void updateGame() {
     if(isPaused || isGameOver){
       return;
@@ -263,10 +239,14 @@ public class Gameboard {
   }
   
   boolean checkBelow() {
-    for (int i = currentBlock.getBlockX(); i < currentBlock.getBlockX() + currentBlock.getGrid()[0].length; i++) {
-      if (currentBlock.getBlockY() < map.length - currentBlock.getGrid().length) {
-        if (map[currentBlock.getBlockY() + currentBlock.getGrid().length][i] != 0) {
-          return false;
+    for (int i = 0; i < currentBlock.getGrid().length; i++) {
+      for (int j = 0; j < currentBlock.getGrid()[i].length; j++) {
+        if (currentBlock.getGrid()[i][j] == 1) {
+          int gridX = currentBlock.getBlockX() + j;
+          int gridY = currentBlock.getBlockY() + i + 1;
+          if (gridY >= map.length || (gridY >= 0 && map[gridY][gridX] != 0)) {
+            return false;
+          }
         }
       }
     }
