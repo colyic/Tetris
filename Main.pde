@@ -17,6 +17,20 @@ void setup() {
   isStarted = false;
   gameboard = new Gameboard();
   scoreboard = new Scoreboard();
+  
+  textSize(80);
+  fill(#FF6961);
+  text("T", 265, 225);
+  fill(#FFA500);
+  text("E", 315, 225);
+  fill(#FDFD96);
+  text("T", 365, 225);
+  fill(#90EE90);
+  text("R", 415, 225);
+  fill(#B7FFFA);
+  text("I", 475, 225);
+  fill(#C3B1E1);
+  text("S", 503, 225);
 
   fill(200);
   textAlign(CENTER);
@@ -44,6 +58,12 @@ void draw() {
       gameboard = new Gameboard();
       //gameboard.updateGrid();
     }
+    
+    if (isMouseOver(275, 510, 250, 80) && mousePressed) {
+      gameboard.isPaused = false;
+      setup();
+      //gameboard.updateGrid();
+    }
   }
   
   if (isStarted) {
@@ -58,6 +78,11 @@ void draw() {
           gameboard.isPaused = false;
           gameboard = new Gameboard();
           holdBox();
+          //gameboard.updateGrid();
+        }
+        if (isMouseOver(275, 510, 250, 80) && mousePressed) {
+          gameboard.isPaused = false;
+          setup();
           //gameboard.updateGrid();
         }
       }
@@ -126,11 +151,22 @@ void resumeButton(){
   text("RESUME", 400, 465);
 }
 
+void quitButton(){
+  fill(255);
+  rect(275, 510, 250, 80, 2);
+  fill(255);
+  textAlign(CENTER);
+  textSize(45);
+  fill(0);
+  text("QUIT", 400 , 565);
+}
+
 void gameOverScreen(){
   fill(0);
   rect(200, 50, 400, 700, 5);
  
   restartButton();
+  quitButton();
   
   fill(255);
   text("GAME OVER", 400, 200);
@@ -144,6 +180,7 @@ void pauseScreen(){
   
   restartButton();
   resumeButton();
+  quitButton();
   
   fill(0);
   text("PAUSED", 400, 200);
@@ -151,13 +188,13 @@ void pauseScreen(){
 
 void showHighScore(){
   fill(255);
-  rect(275, 510, 250, 80, 2);
+  rect(275, 410, 250, 80, 2);
   fill(255);
   textAlign(CENTER);
   textSize(20);
   fill(0);
-  text("HIGH SCORE:", 400 , 540);
-  text(highScore, 400, 570);
+  text("HIGH SCORE:", 400 , 440);
+  text(highScore, 400, 470);
 }
 
 
