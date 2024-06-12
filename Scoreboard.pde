@@ -30,7 +30,7 @@ public class ScoreBoard{
   }
   
   void updateLinesCleared(int addedLinesCleared){
-    linesCleared += addedLinesCleared;
+    linesCleared += addedLinesCleared;  
   }
 }
   

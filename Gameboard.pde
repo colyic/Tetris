@@ -17,6 +17,7 @@ public class Gameboard {
   ArrayList<Block> queue;
   Block holdBlock;
   boolean holdUsed;
+  boolean isHardDropped;
   
   boolean isGameOver;
   boolean isPaused;
@@ -56,6 +57,7 @@ public class Gameboard {
     
     holdBlock = null;
     holdUsed = false;
+    isHardDropped = false;
     
     isGameOver = false;
     isPaused = false;
@@ -246,6 +248,7 @@ public class Gameboard {
           lockBlock();
           clearLines();
           queueNext();
+          isHardDropped = false;
         }
       lastDropTime = currentTime;
     }
@@ -279,11 +282,14 @@ public class Gameboard {
   }
   
   void hardDrop(){
-    while(currentBlock.canMoveDown() && checkBelow()) {
-      currentBlock.blockY++;
+    if (!isHardDropped) {
+      while(currentBlock.canMoveDown() && checkBelow()) {
+        currentBlock.blockY++;
+      }
+      currentBlock.isPlaced = true;
+      scoreboard.updateScore(2 * scoreboard.getLevel() * currentBlock.blockY);
+      isHardDropped = true;
     }
-    currentBlock.isPlaced = true;
-    scoreboard.updateScore(2 * scoreboard.getLevel() * currentBlock.blockY);
   }
 
   void clearLines() {
