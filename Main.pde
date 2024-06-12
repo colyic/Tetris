@@ -3,8 +3,6 @@ boolean isStarted;
 int startWidth = 250;
 int startLength = 80;
 
-int boxRadius = 5;
-
 Gameboard gameboard;
 Scoreboard scoreboard;
 int highScore;
@@ -50,19 +48,16 @@ void draw() {
   if (gameboard.isPaused){
     if (isMouseOver(275, 410, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
-      //gameboard.updateGrid();
     }
     
     if (isMouseOver(275, 310, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       gameboard = new Gameboard();
-      //gameboard.updateGrid();
     }
     
     if (isMouseOver(275, 510, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       setup();
-      //gameboard.updateGrid();
     }
   }
   
@@ -78,12 +73,10 @@ void draw() {
           gameboard.isPaused = false;
           gameboard = new Gameboard();
           holdBox();
-          //gameboard.updateGrid();
         }
         if (isMouseOver(275, 510, 250, 80) && mousePressed) {
           gameboard.isPaused = false;
           setup();
-          //gameboard.updateGrid();
         }
       }
     } else {

@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Gameboard {
   int[][] map;
     
@@ -37,7 +35,7 @@ public class Gameboard {
     gameboardY = height / 2 - gameboardLength / 2;
         
     fill(200);
-    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
+    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, 5);
         
     gridSide = 30;
     gridX = gameboardX + 50;
@@ -210,30 +208,6 @@ public class Gameboard {
     gridY = gameboardY + 50;
   }
   
-  //void updateGrid() {
-  //  // reset map
-  //  for (int i = 0; i < map.length; i++) {
-  //    for (int j = 0; j < map[i].length; j++) {
-  //      if(map[i][j] != 2){
-  //        map[i][j] = 0;
-  //      }
-  //    }
-  //  }
-    
-  //  // Update the map with the current block's position
-  //  int[][] grid = currentBlock.getGrid();
-  //  int x = currentBlock.getBlockX();
-  //  int y = currentBlock.getBlockY();
-    
-  //  for (int i = 0; i < grid.length; i++) {
-  //    for (int j = 0; j < grid[0].length; j++) {
-  //      if (grid[i][j] == 1) {
-  //        map[y + i][x + j] = 1;
-  //      }
-  //    }
-  //  }
-  //}
-  
   void updateGame() {
     if(isPaused || isGameOver){
       return;
@@ -254,12 +228,10 @@ public class Gameboard {
     }
     drawGrid();
     drawCurrentBlock();
-    //updateGrid();
     drawNextBlocks();
     drawHoldBlock();
     displayScores();
     changeDropInterval();
-    System.out.println(Arrays.toString(map));
   }
   
   boolean checkBelow() {
