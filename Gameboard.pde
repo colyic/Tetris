@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Gameboard {
   int[][] map;
     
@@ -37,7 +35,7 @@ public class Gameboard {
     gameboardY = height / 2 - gameboardLength / 2;
         
     fill(200);
-    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, boxRadius);
+    rect(gameboardX, gameboardY, gameboardWidth, gameboardLength, 5);
         
     gridSide = 30;
     gridX = gameboardX + 50;
@@ -230,12 +228,10 @@ public class Gameboard {
     }
     drawGrid();
     drawCurrentBlock();
-    //updateGrid();
     drawNextBlocks();
     drawHoldBlock();
     displayScores();
     changeDropInterval();
-    System.out.println(Arrays.toString(map));
   }
   
   boolean checkBelow() {
