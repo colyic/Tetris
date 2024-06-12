@@ -13,51 +13,45 @@ void setup() {
   noStroke();
   
   isStarted = false;
-  
-  int leftX = 25;
-  int topY = 125;
-  int bottomY = 300;
-  
-  int boxWidth = 150;
-  
   gameboard = new Gameboard();
 
   fill(200);
   textAlign(CENTER);
   textSize(30);
-  
-  // hold box
-  rect(leftX, topY, boxWidth, 100, boxRadius);
-  text("HOLD", leftX + boxWidth / 2, topY - 5);
-  
-  // score + level + lines box
-  rect(leftX, bottomY, boxWidth, 350, boxRadius);
-  
-  fill(255);
-  
-  text("SCORE", leftX + boxWidth / 2, bottomY + 50);
-  text("LEVEL", leftX + boxWidth / 2, bottomY + 150);
-  text("LINES", leftX + boxWidth / 2, bottomY + 250);
-    
-  // next box
-  fill(200);
-  rect(width - 175, topY, boxWidth, 300, boxRadius);
-  text("NEXT", width - 175 + boxWidth / 2, topY - 5);
-  
-  startScreen();
+  holdBox();
+  scoreBox();
+  nextBox();
+  startButton();
 }
 
 void draw() {
-  int startX = width / 2 - startWidth / 2;
-  int startY = height / 2 - startLength / 2 - 50;
-
-  if (!isStarted && isMouseOver(startX, startY, startWidth, startLength) && mousePressed) {
+  if (!isStarted && isMouseOver(275, 310, 250, 80) && mousePressed) {
     isStarted = true;
     gameboard.drawGrid();
   }
   
+  if (gameboard.isPaused){
+    if (isMouseOver(275, 410, 250, 80) && mousePressed) {
+      gameboard.isPaused = false;
+      gameboard.updateGrid();
+    }
+    if (isMouseOver(275, 310, 250, 80) && mousePressed) {
+      gameboard.isPaused = false;
+      gameboard = new Gameboard();
+      gameboard.updateGrid();
+    }
+  }
+  
   if (isStarted) {
-    gameboard.updateGame();
+    if (!gameboard.isPaused) {
+      gameboard.updateGame();
+      //isGameOver = gameboard.isGameOver;
+      //if (isGameOver) {
+      //  gameOverScreen();
+      //}
+    } else {
+      pauseScreen();
+    }
   }
 }
 
@@ -68,21 +62,74 @@ boolean isMouseOver(int x, int y, int w, int h) {
   return false;
 }
 
-void startScreen() {
+void startButton() {
   fill(#90EE90);
- 
-  int startWidth = 250;
-  int startLength = 80;
-  int startX = width / 2 - startWidth / 2;
-  int startY = height / 2 - startLength / 2 - 50;
-  
-  rect(startX, startY, startWidth, startLength, 2);
-  
+  rect(275, 310, 250, 80, 2);
   fill(255);
   textAlign(CENTER);
   textSize(45);
+  fill(255);
+  text("START", 400, 365);
+}
+
+void holdBox(){
+  rect(25, 125, 150, 100, 5);
+  text("HOLD", 100, 120);
+}
+
+void nextBox(){
+  fill(200);
+  rect(625, 125, 150, 300, 5);
+  text("NEXT", 700, 120);
+}
+
+void scoreBox(){
+  rect(25, 300, 150, 350, 5);
+  fill(255);
+  text("SCORE", 100, 350);
+  text("LEVEL", 100, 450);
+  text("LINES", 100, 550);
+}
+
+void restartButton() {
+  fill(255);
+  rect(275, 310, 250, 80, 2);
+  fill(255);
+  textAlign(CENTER);
+  textSize(45);
+  fill(0);
+  text("RESTART", 400, 365);
+}
+
+void resumeButton(){
+  fill(255);
+  rect(275, 410, 250, 80, 2);
+  fill(255);
+  textAlign(CENTER);
+  textSize(45);
+  fill(0);
+  text("RESUME", 400, 465);
+}
+
+void gameOverScreen(){
+  fill(0);
+  rect(200, 50, 400, 700, 5);
+ 
+  restartButton();
   
-  text("START", startX + startWidth / 2, startY + 55);
+  fill(255);
+  text("GAME OVER", 400, 200);
+}
+
+void pauseScreen(){
+  fill(200);
+  rect(200, 50, 400, 700, 5);
+  
+  restartButton();
+  resumeButton();
+  
+  fill(0);
+  text("PAUSED", 400, 200);
 }
 
 void keyPressed() {
@@ -99,6 +146,8 @@ void keyPressed() {
       gameboard.currentBlock.hardDrop();
     } else if (keyCode == CONTROL){
       gameboard.swapHold();
+    } else if (keyCode == TAB){
+      gameboard.isPaused = true;
     }
     gameboard.updateGrid();
   }

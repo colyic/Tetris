@@ -18,6 +18,9 @@ public class Gameboard {
   Block holdBlock;
   boolean holdUsed;
   
+  boolean isGameOver;
+  boolean isPaused;
+  
   long lastDropTime;  // Time tracking for block dropping
   final int dropInterval = 1000;  // 1 second interval
     
@@ -50,6 +53,9 @@ public class Gameboard {
     holdBlock = null;
     holdUsed = false;
     
+    isGameOver = false;
+    isPaused = false;
+    
     lastDropTime = millis();  // Initialize the timer
   }
     
@@ -64,70 +70,7 @@ public class Gameboard {
   void fillBlock(int x, int y) {
     rect(gridX + x * gridSide, gridY + y * gridSide, gridSide, gridSide, 2);
   }
-    
-  void drawGrid() {
-    stroke(255);
-    fill(65);
-        
-    for (int i = 0; i < map.length; i++) {
-      for (int j = 0; j < map[i].length; j++) {
-        rect(gridX, gridY, gridSide, gridSide, 2);
-        gridX += gridSide;
-                
-        if (j == map[i].length - 1) {
-          gridY += gridSide;
-         gridX -= gridSide * 10;
-        }
-      }
-    }
-    gridX = gameboardX + 50;
-    gridY = gameboardY + 50;
-  }
-    
-  void updateGame() {
-    long currentTime = millis();
-    if (currentTime - lastDropTime >= dropInterval) {
-      if (!currentBlock.isPlaced()) {
-        currentBlock.softDrop();
-        } else {
-        lockBlock();
-        clearLines();
-        queueNext();
-      }
-      lastDropTime = currentTime;
-    }
-    drawGrid();
-    drawCurrentBlock();
-    updateGrid();
-    drawNextBlocks();
-    drawHoldBlock();
-    System.out.println(Arrays.toString(map));
-  }
-    
-  void updateGrid() {
-    // reset map
-    for (int i = 0; i < map.length; i++) {
-      for (int j = 0; j < map[i].length; j++) {
-        if(map[i][j] != 2){
-          map[i][j] = 0;
-        }
-      }
-    }
-    
-    // Update the map with the current block's position
-    int[][] grid = currentBlock.getGrid();
-    int x = currentBlock.getBlockX();
-    int y = currentBlock.getBlockY();
-    
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[0].length; j++) {
-        if (grid[i][j] == 1) {
-          map[y + i][x + j] = 1;
-        }
-      }
-    }
-  }
-    
+  
   void drawCurrentBlock() {
     for (int i = 0; i < currentBlock.getGrid().length; i++) {
       for (int j = 0; j < currentBlock.getGrid()[i].length; j++) {
@@ -137,21 +80,6 @@ public class Gameboard {
         }
       }
     }
-  }
-    
-  void lockBlock() {
-    int[][] blockGrid = currentBlock.getGrid();
-    int blockX = currentBlock.getBlockX();
-    int blockY = currentBlock.getBlockY();
-        
-    for(int i = 0; i < blockGrid.length; i++) {
-      for (int j = 0; j < blockGrid[i].length; j++) {
-        if (blockGrid[i][j] == 1) {
-          map[blockY + i][blockX + j] = 2; // Assuming 1 represents a filled cell
-        }
-      }
-    }
-    holdUsed = false;
   }
   
   void queueNext(){
@@ -225,7 +153,87 @@ public class Gameboard {
     }
   }
   
+  void lockBlock() {
+    int[][] blockGrid = currentBlock.getGrid();
+    int blockX = currentBlock.getBlockX();
+    int blockY = currentBlock.getBlockY();
+        
+    for(int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1) {
+          map[blockY + i][blockX + j] = 2; // Assuming 1 represents a filled cell
+        }
+      }
+    }
+    holdUsed = false;
+  }
     
+  void drawGrid() {
+    stroke(255);
+    fill(65);
+        
+    for (int i = 0; i < map.length; i++) {
+      for (int j = 0; j < map[i].length; j++) {
+        rect(gridX, gridY, gridSide, gridSide, 2);
+        gridX += gridSide;
+                
+        if (j == map[i].length - 1) {
+          gridY += gridSide;
+         gridX -= gridSide * 10;
+        }
+      }
+    }
+    gridX = gameboardX + 50;
+    gridY = gameboardY + 50;
+  }
+  
+  void updateGrid() {
+    // reset map
+    for (int i = 0; i < map.length; i++) {
+      for (int j = 0; j < map[i].length; j++) {
+        if(map[i][j] != 2){
+          map[i][j] = 0;
+        }
+      }
+    }
+    
+    // Update the map with the current block's position
+    int[][] grid = currentBlock.getGrid();
+    int x = currentBlock.getBlockX();
+    int y = currentBlock.getBlockY();
+    
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[0].length; j++) {
+        if (grid[i][j] == 1) {
+          map[y + i][x + j] = 1;
+        }
+      }
+    }
+  }
+  
+  void updateGame() {
+    if(isPaused){
+      return;
+    }
+    long currentTime = millis();
+    if (currentTime - lastDropTime >= dropInterval) {
+      if (!currentBlock.isPlaced()) {
+        currentBlock.softDrop();
+        } else {
+        lockBlock();
+        clearLines();
+        queueNext();
+      }
+      lastDropTime = currentTime;
+    }
+    drawGrid();
+    drawCurrentBlock();
+    updateGrid();
+    drawNextBlocks();
+    drawHoldBlock();
+    System.out.println(Arrays.toString(map));
+  }
+   
   void clearLines() {
     for (int i = 0; i < map.length; i++) {
       boolean fullLine = true;
@@ -242,5 +250,8 @@ public class Gameboard {
         map[0] = new int[10];
       }
     }
+  }
+  
+  void isGameOver(){
   }
 }
