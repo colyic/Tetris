@@ -15,6 +15,9 @@ public class Gameboard {
     
   Block currentBlock;
   Block[] queue;
+  
+  long lastDropTime;  // Time tracking for block dropping
+  final int dropInterval = 1000;  // 1 second interval
     
   public Gameboard() {
     map = new int[20][10];
@@ -33,6 +36,7 @@ public class Gameboard {
     gridY = gameboardY + 50;
     
     currentBlock = new Block();
+    lastDropTime = millis();  // Initialize the timer
   }
     
   int getLength() {
@@ -67,23 +71,31 @@ public class Gameboard {
   }
     
   void updateGame() {
-    if (!currentBlock.isPlaced()) {
-      currentBlock.softDrop();      
-      // Check if block has landed
-      if (!currentBlock.canMoveDown()) {
-        placeBlock();
+    long currentTime = millis();
+    if (currentTime - lastDropTime >= dropInterval) {
+      if (!currentBlock.isPlaced()) {
+        currentBlock.softDrop();
+        } else {
+        lockBlock();
         clearLines();
         currentBlock = new Block();
       }
+      lastDropTime = currentTime;
     }
     drawGrid();
     drawBlock();
+    updateGrid();
+    System.out.println(Arrays.toString(map));
   }
     
   void updateGrid() {
     // reset map
     for (int i = 0; i < map.length; i++) {
-      Arrays.fill(map[i], 0);
+      for (int j = 0; j < map[i].length; j++) {
+        if(map[i][j] != 2){
+          map[i][j] = 0;
+        }
+      }
     }
     
     // Update the map with the current block's position
@@ -92,7 +104,7 @@ public class Gameboard {
     int y = currentBlock.getBlockY();
     
     for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
+      for (int j = 0; j < grid[0].length; j++) {
         if (grid[i][j] == 1) {
           map[y + i][x + j] = 1;
         }
@@ -111,16 +123,18 @@ public class Gameboard {
     }
   }
     
-  void placeBlock() {
-    int[][] grid = currentBlock.getGrid();
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
-        if (grid[i][j] == 1) {
-          map[currentBlock.getBlockY() + i][currentBlock.getBlockX() + j] = 1;
+  void lockBlock() {
+    int[][] blockGrid = currentBlock.getGrid();
+    int blockX = currentBlock.getBlockX();
+    int blockY = currentBlock.getBlockY();
+        
+    for(int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1) {
+          map[blockY + i][blockX + j] = 2; // Assuming 1 represents a filled cell
         }
       }
     }
-    currentBlock.setIsPlaced(true);
   }
     
   void clearLines() {

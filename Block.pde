@@ -97,15 +97,6 @@ public class Block {
     isPlaced = true;
   }
   
-  void addBlockX(){
-    blockX++;
-  }
-  
-  
-  void addBlockY() {
-    blockY++;
-  }
-  
   boolean isPlaced() {
     return isPlaced;
   }
@@ -138,15 +129,11 @@ public class Block {
   
   
   void rotate() {
-    //if (blockType.equals("OBlock")) {
-    //// OBlock does not rotate
-    //   return;
-    //}
     int n = blockGrid.length;
     int m = blockGrid[0].length;
     int[][] newGrid = new int[m][n];
 
-    // Rotate the grid 90 degrees clockwise
+    // rotate grid 90 degrees (clockwise)
     for(int i = 0; i < n; i++) {
       for(int j = 0; j < m; j++) {
         newGrid[j][n - 1 - i] = blockGrid[i][j];
@@ -159,7 +146,7 @@ public class Block {
     int newBlockX = blockX + offsetX;
     int newBlockY = blockY + offsetY;
 
-    // Ensure the block does not go out of bounds after rotation
+    // check for out of bounds after rotation
     if(newBlockX < 0) {
         newBlockX = 0;
     }

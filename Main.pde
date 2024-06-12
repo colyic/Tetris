@@ -8,7 +8,6 @@ int boxRadius = 5;
 Gameboard gameboard;
 
 void setup() {
-  //frameRate(1);
   size(800, 800);
   background(255);
   noStroke();
@@ -58,9 +57,7 @@ void draw() {
   }
   
   if (isStarted) {
-    if (frameCount % 30 == 0) {
-      gameboard.updateGame();
-    }
+    gameboard.updateGame();
   }
 }
 
