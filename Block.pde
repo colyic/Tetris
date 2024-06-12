@@ -6,7 +6,11 @@ public class Block {
   int blockX;
   int blockY;
   
+  private int initialX;
+  private int initialY;
+  
   int[][] blockGrid;
+  private int[][] initialGrid;
   
   public Block() {
     this.randomizeType();
@@ -14,6 +18,10 @@ public class Block {
     
     blockX = 3;
     blockY = 0;
+    
+    this.initialGrid = makeCopy(blockGrid);
+    this.initialX = blockX;
+    this.initialY = blockY;
   }
   
   String getBlockType() {
@@ -101,15 +109,11 @@ public class Block {
     return isPlaced;
   }
   
-  void setIsPlaced(boolean placed) {
-    isPlaced = placed;
-  }
-  
   void randomizeType() {
     int rng = (int) (Math.random() * 7);
     
     String[] typeArr = {"IBlock", "JBlock", "LBlock", "OBlock", "SBlock", "TBlock", "ZBlock"};
-    color[] colors = {#00FFFF, #00008B, #FFA500, #FFFF00, #90EE90, #FF00FF, #FF0000};
+    color[] colors = {#B7FFFA, #779ECB, #FFA500, #FDFD96, #90EE90, #FFD1DC, #FF6961};
     
     int[][][] grid = {
         {{1, 1, 1, 1}},
@@ -140,7 +144,7 @@ public class Block {
       }
     }
 
-    //Adjust position to prevent shifting
+    // adjust position to prevent shifting
     int offsetX = (n - m) / 2;
     int offsetY = (m - n) / 2;
     int newBlockX = blockX + offsetX;
@@ -168,7 +172,22 @@ public class Block {
     }
   }
 
-        
+  public void resetToInitialState() {
+    this.blockGrid = makeCopy(initialGrid);
+    this.blockX = initialX;
+    this.blockY = initialY;
+  }
+
+  private int[][] makeCopy(int[][] original) {
+    if (original == null) {
+      return null;
+    }
+    int[][] copy = new int[original.length][];
+    for (int i = 0; i < original.length; i++) {
+      copy[i] = Arrays.copyOf(original[i], original[i].length);
+    }
+    return copy;
+  }      
   
   private boolean isValidPosition(int[][] grid, int x, int y) {
     for (int i = 0; i < grid.length; i++) {

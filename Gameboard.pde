@@ -86,6 +86,10 @@ public class Gameboard {
   
   void queueNext() {
     currentBlock = queue.remove(0);
+    if (!canPlaceBlock(currentBlock)) {
+      isGameOver = true;
+      return;
+    }
     Block newQueue = new Block();
     queue.add(newQueue);
   }
@@ -120,12 +124,15 @@ public class Gameboard {
     if(!holdUsed) {
       if (holdBlock == null) {
         holdBlock = currentBlock;
+        holdBlock.resetToInitialState();
         queueNext();
         drawCurrentBlock();
       } else {
         Block temp = currentBlock;
         currentBlock = holdBlock;
+        currentBlock.resetToInitialState();
         holdBlock = temp;
+        holdBlock.resetToInitialState();
         drawCurrentBlock();
       }
       holdUsed = true;
@@ -216,7 +223,7 @@ public class Gameboard {
   //}
   
   void updateGame() {
-    if(isPaused){
+    if(isPaused || isGameOver){
       return;
     }
     
@@ -285,5 +292,30 @@ public class Gameboard {
   }
   
   void isGameOver(){
+    if (currentBlock.isPlaced()) {
+      for (int i = 0; i < map[0].length; i++) {
+        if (map[0][i] == 1) {
+          isGameOver = true;
+        }
+      }
+    }
+  }
+  
+  boolean canPlaceBlock(Block block) {
+    int[][] blockGrid = block.getGrid();
+    int blockX = block.getBlockX();
+    int blockY = block.getBlockY();
+    for (int i = 0; i < blockGrid.length; i++) {
+      for (int j = 0; j < blockGrid[i].length; j++) {
+        if (blockGrid[i][j] == 1) {
+          int gridX = blockX + j;
+          int gridY = blockY + i;
+          if (gridY < 0 || gridX < 0 || gridX >= map[0].length || gridY >= map.length || map[gridY][gridX] != 0) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 }

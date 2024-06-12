@@ -46,14 +46,20 @@ void draw() {
   if (isStarted) {
     if (!gameboard.isPaused) {
       gameboard.updateGame();
-      //isGameOver = gameboard.isGameOver;
-      //if (isGameOver) {
-      //  gameOverScreen();
-      //}
+      if (gameboard.isGameOver) {
+        gameOverScreen();
+        if (isMouseOver(275, 310, 250, 80) && mousePressed) {
+        gameboard.isPaused = false;
+        gameboard = new Gameboard();
+        //gameboard.updateGrid();
+        }
+      }
     } else {
       pauseScreen();
     }
   }
+  
+  
 }
 
 boolean isMouseOver(int x, int y, int w, int h) {
