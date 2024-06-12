@@ -7,6 +7,7 @@ int boxRadius = 5;
 
 Gameboard gameboard;
 Scoreboard scoreboard;
+int highScore;
 
 void setup() {
   size(800, 800);
@@ -49,11 +50,15 @@ void draw() {
     if (!gameboard.isPaused) {
       gameboard.updateGame();
       if (gameboard.isGameOver) {
+        if (gameboard.scoreboard.getScore() > highScore) {
+          highScore = gameboard.scoreboard.getScore();
+        }
         gameOverScreen();
         if (isMouseOver(275, 310, 250, 80) && mousePressed) {
-        gameboard.isPaused = false;
-        gameboard = new Gameboard();
-        //gameboard.updateGrid();
+          gameboard.isPaused = false;
+          gameboard = new Gameboard();
+          holdBox();
+          //gameboard.updateGrid();
         }
       }
     } else {
@@ -83,6 +88,7 @@ void startButton() {
 
 void holdBox(){
   rect(25, 125, 150, 100, 5);
+  textSize(30);
   text("HOLD", 100, 120);
 }
 
@@ -128,6 +134,8 @@ void gameOverScreen(){
   
   fill(255);
   text("GAME OVER", 400, 200);
+  
+  showHighScore();
 }
 
 void pauseScreen(){
@@ -139,6 +147,17 @@ void pauseScreen(){
   
   fill(0);
   text("PAUSED", 400, 200);
+}
+
+void showHighScore(){
+  fill(255);
+  rect(275, 510, 250, 80, 2);
+  fill(255);
+  textAlign(CENTER);
+  textSize(20);
+  fill(0);
+  text("HIGH SCORE:", 400 , 540);
+  text(highScore, 400, 570);
 }
 
 

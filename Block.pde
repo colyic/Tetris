@@ -89,22 +89,6 @@ public class Block {
     }
   }
   
-  //void softDrop() {
-  //  if(canMoveDown()) {
-  //    blockY++;
-  //  }
-  //  else {
-  //    isPlaced = true;
-  //  }
-  //}
-  
-  //void hardDrop(){
-  //  while(canMoveDown()){
-  //    blockY++;
-  //  }
-  //  isPlaced = true;
-  //}
-  
   boolean isPlaced() {
     return isPlaced;
   }

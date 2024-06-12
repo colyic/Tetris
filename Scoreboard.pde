@@ -1,7 +1,7 @@
 public class ScoreBoard{
   int score;
   int level;
-  int linesCleared = 0;
+  int linesCleared;
   
   public ScoreBoard(){
     score = 0;
