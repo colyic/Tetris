@@ -241,9 +241,9 @@ public class Gameboard {
   }
   
   boolean checkBelow() {
-    for (int i = currentBlock.getBlockX(); i < currentBlock.getBlockX() + currentBlock.getGrid().length; i++) {
-      if (currentBlock.getBlockY() < map.length - currentBlock.getGrid()[0].length) {
-        if (map[currentBlock.getBlockY() + currentBlock.getGrid()[0].length][i] != 0) {
+    for (int i = currentBlock.getBlockX(); i < currentBlock.getBlockX() + currentBlock.getGrid()[0].length; i++) {
+      if (currentBlock.getBlockY() < map.length - currentBlock.getGrid().length) {
+        if (map[currentBlock.getBlockY() + currentBlock.getGrid().length][i] != 0) {
           return false;
         }
       }
