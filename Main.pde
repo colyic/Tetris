@@ -33,12 +33,13 @@ void draw() {
   if (gameboard.isPaused){
     if (isMouseOver(275, 410, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
-      gameboard.updateGrid();
+      //gameboard.updateGrid();
     }
+    
     if (isMouseOver(275, 310, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       gameboard = new Gameboard();
-      gameboard.updateGrid();
+      //gameboard.updateGrid();
     }
   }
   
@@ -141,14 +142,14 @@ void keyPressed() {
     } else if (keyCode == RIGHT) {
       gameboard.currentBlock.moveRight();
     } else if (keyCode == DOWN) {
-      gameboard.currentBlock.softDrop();
+      gameboard.softDrop();
     } else if (keyCode == ' ')  {
-      gameboard.currentBlock.hardDrop();
+      gameboard.hardDrop();
     } else if (keyCode == CONTROL){
       gameboard.swapHold();
     } else if (keyCode == TAB){
       gameboard.isPaused = true;
     }
-    gameboard.updateGrid();
+    //gameboard.updateGrid();
   }
 }

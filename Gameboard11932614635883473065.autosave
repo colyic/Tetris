@@ -43,11 +43,9 @@ public class Gameboard {
     currentBlock = new Block();
     
     queue = new ArrayList<Block>();
-    
     Block blockA = new Block();
     Block blockB = new Block();
     Block blockC = new Block();
-    
     queue.add(blockA);
     queue.add(blockB);
     queue.add(blockC);
@@ -95,10 +93,10 @@ public class Gameboard {
     fill(200);
     rect(625, 125, 150, 300, 5);
      
-    int nextBlockX = 650; // starting corner
+    int nextBlockX = 650; //starting corner
     int nextBlockY = 150; 
-    int spacing = 100; // spacing between blocks
-    int blockSize = gridSide; // adjust block size
+    int spacing = 100; //spacing between blocks
+    int blockSize = gridSide; // Adjust block size
     
     for (int i = 0; i < queue.size(); i++) {
       Block nextBlock = queue.get(i);
@@ -116,8 +114,8 @@ public class Gameboard {
     }
   }
   
-  void swapHold() {
-    if(!holdUsed) {
+  void swapHold(){
+    if(!holdUsed){
       if (holdBlock == null) {
         holdBlock = currentBlock;
         queueNext();
@@ -132,15 +130,15 @@ public class Gameboard {
     }
   }
   
-  void drawHoldBlock() {
-    if(holdBlock != null) {
+  void drawHoldBlock(){
+    if(holdBlock != null){
       //reset hold box
       fill(200);
       rect(25, 125, 150, 100, 5);
     
-      int holdBlockX = 50; // starting corner
+      int holdBlockX = 50; //starting corner
       int holdBlockY = 150;
-      int blockSize = gridSide; // adjust block size
+      int blockSize = gridSide; // Adjust block size
     
       int[][] holdBlockGrid = holdBlock.getGrid();
     
@@ -176,14 +174,12 @@ public class Gameboard {
         
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map[i].length; j++) {
-        if (map[i][j] == 0) {
-          rect(gridX, gridY, gridSide, gridSide, 2);
-        }
+        rect(gridX, gridY, gridSide, gridSide, 2);
         gridX += gridSide;
-        
+                
         if (j == map[i].length - 1) {
           gridY += gridSide;
-          gridX -= gridSide * 10;
+         gridX -= gridSide * 10;
         }
       }
     }
@@ -191,81 +187,53 @@ public class Gameboard {
     gridY = gameboardY + 50;
   }
   
-  //void updateGrid() {
-  //  // reset map
-  //  for (int i = 0; i < map.length; i++) {
-  //    for (int j = 0; j < map[i].length; j++) {
-  //      if(map[i][j] != 2){
-  //        map[i][j] = 0;
-  //      }
-  //    }
-  //  }
+  void updateGrid() {
+    // reset map
+    for (int i = 0; i < map.length; i++) {
+      for (int j = 0; j < map[i].length; j++) {
+        if(map[i][j] != 2){
+          map[i][j] = 0;
+        }
+      }
+    }
     
-  //  // Update the map with the current block's position
-  //  int[][] grid = currentBlock.getGrid();
-  //  int x = currentBlock.getBlockX();
-  //  int y = currentBlock.getBlockY();
+    // Update the map with the current block's position
+    int[][] grid = currentBlock.getGrid();
+    int x = currentBlock.getBlockX();
+    int y = currentBlock.getBlockY();
     
-  //  for (int i = 0; i < grid.length; i++) {
-  //    for (int j = 0; j < grid[0].length; j++) {
-  //      if (grid[i][j] == 1) {
-  //        map[y + i][x + j] = 1;
-  //      }
-  //    }
-  //  }
-  //}
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[0].length; j++) {
+        if (grid[i][j] == 1) {
+          map[y + i][x + j] = 1;
+        }
+      }
+    }
+  }
   
   void updateGame() {
     if(isPaused){
       return;
     }
-    
     long currentTime = millis();
-    
     if (currentTime - lastDropTime >= dropInterval) {
       if (!currentBlock.isPlaced()) {
-        softDrop();
+        currentBlock.softDrop();
         } else {
-          lockBlock();
-          clearLines();
-          queueNext();
-        }
+        lockBlock();
+        clearLines();
+        queueNext();
+      }
       lastDropTime = currentTime;
     }
     drawGrid();
     drawCurrentBlock();
-    //updateGrid();
+    updateGrid();
     drawNextBlocks();
     drawHoldBlock();
     System.out.println(Arrays.toString(map));
   }
-  
-  boolean checkBelow() {
-    for (int i = currentBlock.getBlockX(); i < currentBlock.getBlockX() + currentBlock.getGrid().length; i++) {
-      if (currentBlock.getBlockY() < map.length - currentBlock.getGrid()[0].length) {
-        if (map[currentBlock.getBlockY() + currentBlock.getGrid()[0].length][i] != 0) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-  
-  void softDrop() {
-    if(currentBlock.canMoveDown() && checkBelow()) {
-      currentBlock.blockY++;
-    } else {
-      currentBlock.isPlaced = true;
-    }
-  }
-  
-  void hardDrop(){
-    while(currentBlock.canMoveDown() && checkBelow()) {
-      currentBlock.blockY++;
-    }
-    currentBlock.isPlaced = true;
-  }
-
+   
   void clearLines() {
     for (int i = 0; i < map.length; i++) {
       boolean fullLine = true;
