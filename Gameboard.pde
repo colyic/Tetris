@@ -14,7 +14,9 @@ public class Gameboard {
   int gridY;
     
   Block currentBlock;
-  Block[] queue;
+  ArrayList<Block> queue;
+  Block holdBlock;
+  boolean holdUsed;
   
   long lastDropTime;  // Time tracking for block dropping
   final int dropInterval = 1000;  // 1 second interval
@@ -36,6 +38,18 @@ public class Gameboard {
     gridY = gameboardY + 50;
     
     currentBlock = new Block();
+    
+    queue = new ArrayList<Block>();
+    Block blockA = new Block();
+    Block blockB = new Block();
+    Block blockC = new Block();
+    queue.add(blockA);
+    queue.add(blockB);
+    queue.add(blockC);
+    
+    holdBlock = null;
+    holdUsed = false;
+    
     lastDropTime = millis();  // Initialize the timer
   }
     
@@ -78,13 +92,15 @@ public class Gameboard {
         } else {
         lockBlock();
         clearLines();
-        currentBlock = new Block();
+        queueNext();
       }
       lastDropTime = currentTime;
     }
     drawGrid();
-    drawBlock();
+    drawCurrentBlock();
     updateGrid();
+    drawNextBlocks();
+    drawHoldBlock();
     System.out.println(Arrays.toString(map));
   }
     
@@ -112,7 +128,7 @@ public class Gameboard {
     }
   }
     
-  void drawBlock() {
+  void drawCurrentBlock() {
     for (int i = 0; i < currentBlock.getGrid().length; i++) {
       for (int j = 0; j < currentBlock.getGrid()[i].length; j++) {
         if (currentBlock.getGrid()[i][j] == 1) {
@@ -135,7 +151,80 @@ public class Gameboard {
         }
       }
     }
+    holdUsed = false;
   }
+  
+  void queueNext(){
+    currentBlock = queue.remove(0);
+    Block newQueue = new Block();
+    queue.add(newQueue);
+  }
+  
+  void drawNextBlocks() {
+    //reset next box
+    fill(200);
+    rect(625, 125, 150, 300, 5);
+     
+    int nextBlockX = 650; //starting corner
+    int nextBlockY = 150; 
+    int spacing = 100; //spacing between blocks
+    int blockSize = gridSide; // Adjust block size
+    
+    for (int i = 0; i < queue.size(); i++) {
+      Block nextBlock = queue.get(i);
+      int[][] nextBlockGrid = nextBlock.getGrid();
+ 
+      for (int row = 0; row < nextBlockGrid.length; row++) {
+        for (int col = 0; col < nextBlockGrid[row].length; col++) {
+          if (nextBlockGrid[row][col] == 1) {
+            fill(nextBlock.getBlockColor());
+            rect(nextBlockX + col * blockSize, nextBlockY + row * blockSize, blockSize, blockSize);
+          } 
+        }
+      }
+      nextBlockY += spacing; // Adjust vertical position for next block
+    }
+  }
+  
+  void swapHold(){
+    if(!holdUsed){
+      if (holdBlock == null) {
+        holdBlock = currentBlock;
+        queueNext();
+        drawCurrentBlock();
+      } else {
+        Block temp = currentBlock;
+        currentBlock = holdBlock;
+        holdBlock = temp;
+        drawCurrentBlock();
+      }
+      holdUsed = true;
+    }
+  }
+  
+  void drawHoldBlock(){
+    if(holdBlock != null){
+      //reset hold box
+      fill(200);
+      rect(25, 125, 150, 100, 5);
+    
+      int holdBlockX = 50; //starting corner
+      int holdBlockY = 150;
+      int blockSize = gridSide; // Adjust block size
+    
+      int[][] holdBlockGrid = holdBlock.getGrid();
+    
+      for (int row = 0; row < holdBlockGrid.length; row++) {
+        for (int col = 0; col < holdBlockGrid[row].length; col++) {
+          if (holdBlockGrid[row][col] == 1) {
+            fill(holdBlock.getBlockColor());
+            rect(holdBlockX + col * blockSize, holdBlockY + row * blockSize, blockSize, blockSize);
+          } 
+        }
+      }
+    }
+  }
+  
     
   void clearLines() {
     for (int i = 0; i < map.length; i++) {

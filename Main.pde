@@ -97,6 +97,8 @@ void keyPressed() {
       gameboard.currentBlock.softDrop();
     } else if (keyCode == ' ')  {
       gameboard.currentBlock.hardDrop();
+    } else if (keyCode == CONTROL){
+      gameboard.swapHold();
     }
     gameboard.updateGrid();
   }
