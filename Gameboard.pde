@@ -23,6 +23,8 @@ public class Gameboard {
   
   long lastDropTime;  // Time tracking for block dropping
   final int dropInterval = 1000;  // 1 second interval
+  
+  ScoreBoard scoreboard;
     
   public Gameboard() {
     map = new int[20][10];
@@ -59,6 +61,8 @@ public class Gameboard {
     isPaused = false;
     
     lastDropTime = millis();  // Initialize the timer
+    
+    scoreboard = new ScoreBoard();
   }
     
   int getLength() {
@@ -175,6 +179,7 @@ public class Gameboard {
       }
     }
     holdUsed = false;
+    scoreboard.updateScore(55);
   }
     
   void drawGrid() {
@@ -244,6 +249,7 @@ public class Gameboard {
     //updateGrid();
     drawNextBlocks();
     drawHoldBlock();
+    displayScores();
     System.out.println(Arrays.toString(map));
   }
   
@@ -287,6 +293,8 @@ public class Gameboard {
           map[k] = map[k - 1];
         }
         map[0] = new int[10];
+        scoreboard.updateLinesCleared(1);
+        scoreboard.updateScore(200);
       }
     }
   }
@@ -317,5 +325,22 @@ public class Gameboard {
       }
     }
     return true;
+  }
+  
+  void displayScores(){
+    //reset box
+    fill(200);
+    rect(25, 300, 150, 350, 5);
+    fill(255);
+    textSize(30);
+    text("SCORE", 100, 350);
+    text("LEVEL", 100, 450);
+    text("LINES", 100, 550);
+    
+    
+    fill(255);
+    text(scoreboard.getScore(), 100,  400);
+    text(scoreboard.getLevel(), 100, 500);
+    text(scoreboard.getLinesCleared(), 100, 600);
   }
 }

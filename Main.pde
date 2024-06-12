@@ -6,6 +6,7 @@ int startLength = 80;
 int boxRadius = 5;
 
 Gameboard gameboard;
+Scoreboard scoreboard;
 
 void setup() {
   size(800, 800);
@@ -14,6 +15,7 @@ void setup() {
   
   isStarted = false;
   gameboard = new Gameboard();
+  scoreboard = new Scoreboard();
 
   fill(200);
   textAlign(CENTER);
@@ -138,6 +140,7 @@ void pauseScreen(){
   fill(0);
   text("PAUSED", 400, 200);
 }
+
 
 void keyPressed() {
   if(isStarted){

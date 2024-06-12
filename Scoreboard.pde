@@ -1,14 +1,12 @@
 public class ScoreBoard{
-  int highscore;
   int score;
   int level;
   int linesCleared = 0;
   
   public ScoreBoard(){
-  }
-  
-  int getHighScore(){
-    return highscore;
+    score = 0;
+    level = 1;
+    linesCleared = 0;
   }
   
   int getScore(){
@@ -23,16 +21,12 @@ public class ScoreBoard{
     return linesCleared;
   }
   
-  void updateHighScore(int newHighscore){
-    highscore = newHighscore;
-  }
-  
   void updateScore(int addedScore){
     score += addedScore;
   }
   
   void updateLevel(){
-    level++;
+    level = score / 5000;
   }
   
   void updateLinesCleared(int addedLinesCleared){
