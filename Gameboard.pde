@@ -20,7 +20,7 @@ public class Gameboard {
   boolean isGameOver;
   boolean isPaused;
   
-  long lastDropTime;  // Time tracking for block dropping
+  long lastDropTime;  // time tracking for block dropping
   int dropInterval = 1000;;  // 1 second interval
   
   ScoreBoard scoreboard;
@@ -235,10 +235,14 @@ public class Gameboard {
   }
   
   boolean checkBelow() {
-    for (int i = currentBlock.getBlockX(); i < currentBlock.getBlockX() + currentBlock.getGrid()[0].length; i++) {
-      if (currentBlock.getBlockY() < map.length - currentBlock.getGrid().length) {
-        if (map[currentBlock.getBlockY() + currentBlock.getGrid().length][i] != 0) {
-          return false;
+    for (int i = 0; i < currentBlock.getGrid().length; i++) {
+      for (int j = 0; j < currentBlock.getGrid()[i].length; j++) {
+        if (currentBlock.getGrid()[i][j] == 1) {
+          int gridX = currentBlock.getBlockX() + j;
+          int gridY = currentBlock.getBlockY() + i + 1;
+          if (gridY >= map.length || (gridY >= 0 && map[gridY][gridX] != 0)) {
+            return false;
+          }
         }
       }
     }
