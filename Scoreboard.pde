@@ -26,7 +26,7 @@ public class ScoreBoard{
   }
   
   void updateLevel(){
-    level = score / 1000 + 1;
+    level = score / 2000 + 1;
   }
   
   void updateLinesCleared(int addedLinesCleared){
