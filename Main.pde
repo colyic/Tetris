@@ -58,12 +58,12 @@ void draw() {
     }
     
     // resume
-    if (isMouseOver(275, 410, 250, 80) && mousePressed) {
-      gameboard.isPaused = false;
-    }
+    //if (isMouseOver(275, 410, 250, 80) && mousePressed) {
+    //  gameboard.isPaused = false;
+    //}
     
     // quit
-    if (isMouseOver(275, 510, 250, 80) && mousePressed) {
+    if (isMouseOver(275, 410, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       beginningScreen();
     }
@@ -154,12 +154,12 @@ void resumeButton(){
 void quitButton(){
   noStroke();
   fill(70);
-  rect(275, 510, 250, 80, 5);
+  rect(275, 410, 250, 80, 5);
   fill(255);
   textAlign(CENTER);
   textSize(45);
   fill(255);
-  text("QUIT", 400, 565);
+  text("QUIT", 400, 465);
 }
 
 void gameOverScreen(){
@@ -190,7 +190,7 @@ void pauseScreen(){
   rect(200, 50, 400, 700, 5);
   
   restartButton();
-  resumeButton();
+  //resumeButton();
   quitButton();
   
   fill(255);
