@@ -249,6 +249,63 @@ public class Gameboard {
     return true;
   }
   
+  boolean checkFit(int newX, int newY) {
+    int diffX = newX - currentBlock.getBlockX();
+    int diffY = newY - currentBlock.getBlockY();
+    
+    for (int i = 0; i < currentBlock.getLength(); i++) {
+      for (int j = 0; j < currentBlock.getWidth(); j++) {
+        if (currentBlock.getGrid()[i][j] == 1 && map[currentBlock.getBlockY() + i + diffY][currentBlock.getBlockX() + j + diffX] != 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  private boolean canMoveLeft() {
+    for (int i = 0; i < currentBlock.getLength(); i++) {
+      for (int j = 0; j < currentBlock.getWidth(); j++) {
+        if (currentBlock.getGrid()[i][j] == 1 && (currentBlock.getBlockX() + j - 1 < 0)) {
+          return false;
+        }
+      }
+    }
+    
+    if (!checkFit(currentBlock.getBlockX() - 1, currentBlock.getBlockY())) {
+      return false;
+    }
+    
+    return true;
+  }
+
+  private boolean canMoveRight() {
+    for (int i = 0; i < currentBlock.getLength(); i++) {
+      for (int j = 0; j < currentBlock.getWidth(); j++) {
+        if (currentBlock.getGrid()[i][j] == 1 && (currentBlock.getBlockX() + j + 1 >= 10)) {
+          return false;
+        }
+      }
+    }
+    
+    if (!checkFit(currentBlock.getBlockX() + 1, currentBlock.getBlockY())) {
+      return false;
+    }
+    return true;
+  }
+  
+  void moveLeft() {
+    if (canMoveLeft()) {
+      currentBlock.blockX--;
+    }
+  }
+  
+  void moveRight() {
+    if (canMoveRight()) {
+      currentBlock.blockX++;
+    }
+  }
+  
   void softDrop() {
     if(currentBlock.canMoveDown() && checkBelow()) {
       currentBlock.blockY++;

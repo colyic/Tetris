@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Block {
   String blockType;
   color blockColor;
@@ -44,26 +46,12 @@ public class Block {
     return blockY;
   }
   
-  private boolean canMoveLeft() {
-    for (int i = 0; i < blockGrid.length; i++) {
-      for (int j = 0; j < blockGrid[i].length; j++) {
-        if (blockGrid[i][j] == 1 && (blockX + j - 1 < 0)) {
-          return false;
-        }
-      }
-    }
-    return true;
+  int getLength() {
+    return blockGrid.length;
   }
-
-  private boolean canMoveRight() {
-    for (int i = 0; i < blockGrid.length; i++) {
-      for (int j = 0; j < blockGrid[i].length; j++) {
-        if (blockGrid[i][j] == 1 && (blockX + j + 1 >= 10)) {
-          return false;
-        }
-      }
-    }
-    return true;
+  
+  int getWidth() {
+    return blockGrid[0].length;
   }
   
   private boolean canMoveDown() {
@@ -77,18 +65,6 @@ public class Block {
     return true;
   }
   
-  void moveLeft() {
-    if(canMoveLeft()) {
-    blockX--;
-    }
-  }
-  
-  void moveRight() {
-    if(canMoveRight()) {
-    blockX++;
-    }
-  }
-  
   boolean isPlaced() {
     return isPlaced;
   }
@@ -97,7 +73,7 @@ public class Block {
     int rng = (int) (Math.random() * 7);
     
     String[] typeArr = {"IBlock", "JBlock", "LBlock", "OBlock", "SBlock", "TBlock", "ZBlock"};
-    color[] colors = {#B7FFFA, #779ECB, #FFA500, #FDFD96, #90EE90, #FFD1DC, #FF6961};
+    color[] colors = {#B7FFFA, #779ECB, #FFA500, #FDFD96, #90EE90, #C3B1E1, #FF6961};
     
     int[][][] grid = {
         {{1, 1, 1, 1}},

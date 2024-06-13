@@ -203,9 +203,9 @@ void keyPressed() {
     if (keyCode == UP) {
       gameboard.currentBlock.rotate();
     } else if (keyCode == LEFT) {
-      gameboard.currentBlock.moveLeft();
+      gameboard.moveLeft();
     } else if (keyCode == RIGHT) {
-      gameboard.currentBlock.moveRight();
+      gameboard.moveRight();
     } else if (keyCode == DOWN) {
       gameboard.softDrop();
     } else if (keyCode == ' ')  {
