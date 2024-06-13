@@ -50,15 +50,18 @@ void draw() {
   }
   
   if (gameboard.isPaused){
-    if (isMouseOver(275, 410, 250, 80) && mousePressed) {
-      gameboard.isPaused = false;
-    }
-    
+    // restart
     if (isMouseOver(275, 310, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       gameboard = new Gameboard();
     }
     
+    // resume
+    if (isMouseOver(275, 410, 250, 80) && mousePressed) {
+      gameboard.isPaused = false;
+    }
+    
+    // quit
     if (isMouseOver(275, 510, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       beginningScreen();
