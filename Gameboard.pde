@@ -111,9 +111,10 @@ public class Gameboard {
     int nextBlockY = 150; 
     int spacing = 100; // spacing between blocks
     int blockSize = gridSide; // adjust block size
-    
+        
     for (int i = 0; i < queue.size(); i++) {
       Block nextBlock = queue.get(i);
+      
       int[][] nextBlockGrid = nextBlock.getGrid();
  
       for (int row = 0; row < nextBlockGrid.length; row++) {
@@ -152,9 +153,20 @@ public class Gameboard {
       //reset hold box
       fill(200);
       rect(25, 125, 150, 100, 5);
-    
-      int holdBlockX = 50; // starting corner
+      
+      int holdBlockX = 50; // starting corner 
       int holdBlockY = 150;
+      
+      if (holdBlock.getBlockType().equals("OBlock")) {
+        holdBlockX += 20;
+      }
+      
+      if (holdBlock.getBlockType().equals("IBlock")) {
+        System.out.println("WOIJFOIEWJF");
+        holdBlockX -= 8;
+        holdBlockY += 5;
+      }
+ 
       int blockSize = gridSide; // adjust block size
     
       int[][] holdBlockGrid = holdBlock.getGrid();

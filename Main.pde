@@ -8,6 +8,7 @@ Scoreboard scoreboard;
 int highScore;
 
 void setup() {
+  frameRate(100);
   size(800, 800);
   background(255);
   beginningScreen();
@@ -65,7 +66,6 @@ void draw() {
     if (isMouseOver(275, 510, 250, 80) && mousePressed) {
       gameboard.isPaused = false;
       beginningScreen();
-      //gameboard.updateGrid();
     }
   }
   
@@ -82,10 +82,9 @@ void draw() {
           gameboard = new Gameboard();
           holdBox();
         }
-        if (isMouseOver(275, 510, 250, 80) && mousePressed) {
+        if (isMouseOver(275, 410, 250, 80) && mousePressed) {
           gameboard.isPaused = false;
           beginningScreen();
-          //gameboard.updateGrid();
         }
       }
     } else {
@@ -132,43 +131,55 @@ void scoreBox(){
 }
 
 void restartButton() {
-  fill(255);
-  rect(275, 310, 250, 80, 2);
+  fill(70);
+  rect(275, 310, 250, 80, 5);
   fill(255);
   textAlign(CENTER);
   textSize(45);
-  fill(0);
+  fill(255);
   text("RESTART", 400, 365);
 }
 
 void resumeButton(){
-  fill(255);
-  rect(275, 410, 250, 80, 2);
+  noStroke();
+  fill(70);
+  rect(275, 410, 250, 80, 5);
   fill(255);
   textAlign(CENTER);
   textSize(45);
-  fill(0);
+  fill(255);
   text("RESUME", 400, 465);
 }
 
 void quitButton(){
-  fill(255);
-  rect(275, 510, 250, 80, 2);
+  noStroke();
+  fill(70);
+  rect(275, 510, 250, 80, 5);
   fill(255);
   textAlign(CENTER);
   textSize(45);
-  fill(0);
-  text("QUIT", 400 , 565);
+  fill(255);
+  text("QUIT", 400, 565);
 }
 
 void gameOverScreen(){
-  fill(0);
+  fill(200);
   rect(200, 50, 400, 700, 5);
  
   restartButton();
-  quitButton();
+  
+  noStroke();
+  fill(70);
+  rect(275, 410, 250, 80, 5);
+  fill(255);
+  textAlign(CENTER);
+  textSize(45);
+  fill(255);
+  text("QUIT", 400, 465);
   
   fill(255);
+  textSize(60);
+  textAlign(CENTER);
   text("GAME OVER", 400, 200);
   
   showHighScore();
@@ -182,21 +193,21 @@ void pauseScreen(){
   resumeButton();
   quitButton();
   
-  fill(0);
+  fill(255);
+  textSize(75);
+  textAlign(CENTER);
   text("PAUSED", 400, 200);
 }
 
 void showHighScore(){
-  fill(255);
-  rect(275, 410, 250, 80, 2);
+  noStroke();
+  fill(70);
   fill(255);
   textAlign(CENTER);
-  textSize(20);
-  fill(0);
-  text("HIGH SCORE:", 400 , 440);
-  text(highScore, 400, 470);
+  textSize(30);
+  fill(255);
+  text("HIGH SCORE: " + highScore, 400, 250);
 }
-
 
 void keyPressed() {
   if(isStarted){
@@ -215,6 +226,5 @@ void keyPressed() {
     } else if (keyCode == TAB){
       gameboard.isPaused = true;
     }
-    //gameboard.updateGrid();
   }
 }
