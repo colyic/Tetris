@@ -60,7 +60,7 @@ public class Gameboard {
     isGameOver = false;
     isPaused = false;
     
-    lastDropTime = millis();  // Initialize the timer
+    lastDropTime = millis();  
     
     scoreboard = new ScoreBoard();
   }
@@ -178,12 +178,12 @@ public class Gameboard {
     for(int i = 0; i < blockGrid.length; i++) {
       for (int j = 0; j < blockGrid[i].length; j++) {
         if (blockGrid[i][j] == 1) {
-          map[blockY + i][blockX + j] = 2; // Assuming 1 represents a filled cell
+          map[blockY + i][blockX + j] = 2;
         }
       }
     }
     holdUsed = false;
-    scoreboard.updateScore(20 * scoreboard.getLevel());
+    scoreboard.updateScore(20);
     scoreboard.updateLevel();
   }
     
@@ -283,7 +283,7 @@ public class Gameboard {
         }
         map[0] = new int[10];
         scoreboard.updateLinesCleared(1);
-        scoreboard.updateScore(100 * scoreboard.getLevel());
+        scoreboard.updateScore(100);
       }
     }
   }
